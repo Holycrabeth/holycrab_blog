@@ -1,0 +1,6 @@
+blockquote {
+  max-width: none; /* Removes any max-width constraint */
+  width: 100%; /* Uses full available width */
+  white-space: pre; /* Keeps spaces in command line text, if needed */
+  overflow-x: auto; /* Adds horizontal scroll if content is very long */
+}
