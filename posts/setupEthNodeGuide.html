@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Clean Blog - Sample Post</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Theme CSS -->
+    <link href="../css/clean-blog.min.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="../vendor/font-awesome/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header page-scroll">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    Menu <i class="fa fa-bars"></i>
+                </button>
+                <a style="color: black" class="navbar-brand" href="../index.html">Holycrab's Blog</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a style="color: black" href="../index.html">博客主页</a>
+                    </li>
+                    <li>
+                        <a style="color: black" href="../joinus.html">加入社群</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+
+    <!-- Page Header -->
+    <!-- Set your background image for this header on the line below. -->
+    <header class="intro-header" style="background-image: url('../img/eth\ top\ banner.webp')">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <div class="post-heading">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Post Content -->
+    <article>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <h1> 
+                        <a 
+                            style="color: black;">
+                            B站以太坊居家节点搭建教程
+                        </a>
+                    </h1>
+                    <h2 class="subheading">
+                        <a 
+                            style="color: black;">
+                            B站视频传送门：<br>
+                        </a>
+                        <a href="https://www.bilibili.com/video/BV13V4y1K7zP/?vd_source=f91a692b3989831e6bc7f7ec4be4508e" 
+                           target="_blank" 
+                           style="font-size: 0.8em; color: black;">
+                          https://www.bilibili.com/video/BV13V4y1K7zP/?vd_source=f91a692b3989831e6bc7f7ec4be4508e
+                        </a>
+                    </h2>
+                    <span class="meta">Posted by <a href="../joinus.html">Holycrab</a> on Mar 28, 2025</span>
+                    <h2 class="section-heading"> 最新硬件配置：</h2>
+
+                    <p>主机 - NUC Gen11 以上 或者任何其他同等CPU性能的小主机</p>
+                    <p>内存 - DDR4 32G （这里推荐2条类似Crucial 16GB DDR4-3200 SODIMM之类的笔记本内存条 双通道要好过单条单通道32G RAM）</p>
+                    <p>硬盘 - 强烈推荐西数的这款WD Black SN850X, 101k/33k r/w IOPS 4TB （可以用2T，新版本的geth自带auto prune自动修剪节点功能，可以延长硬盘使用周期，但是会吃cpu）</p>
+                    <p>
+                        -其他的适用ssd可以参考以下资料：<br>
+                        <a href="https://gist.github.com/yorickdowne/f3a3e79a573bf35767cd002cc977b038" 
+                        target="_blank" 
+                        style="font-size: 0.8em; color:grey;">
+                        https://gist.github.com/yorickdowne/f3a3e79a573bf35767cd002cc977b038
+                     </a>
+                    </p>
+
+                    <p>机器组装部分请参考视频，NUC自带m.2 SSD接口，内存建议双通道16g两张。</p>
+
+                    <h2 class="section-heading"> 系统安装</h2>
+      
+                    <p>准备工作</p>
+                        <ol>
+                            <li>
+                                下载 
+                                <a href="https://ubuntu.com/download" target="_blank" rel="noopener noreferrer">
+                                    Ubuntu 桌面或者服务器版本 20.04.2 LTS 以上
+                                </a>。越新越好，小白建议桌面版，对命令行习惯的可以用服务器版。
+                            </li>
+                            <li>
+                                下载 
+                                <a href="https://www.balena.io/etcher/" target="_blank" rel="noopener noreferrer">
+                                Balena Etcher
+                                </a>
+                            </li>
+                        </ol>
+                    <p>安装过程</p>
+                        <ol>
+                            <li>
+                                使用Balena Etcher将Ubuntu写入U盘
+                            </li>
+                            <li>
+                                重启电脑，进入BIOS，选择U盘启动
+                            </li>
+                            <li>
+                                选择安装Ubuntu
+                            </li>
+                        </ol>
+                    <h2 class="section-heading"> 准备系统</h2>
+                    <p>（以下操作皆在命令行界面terminal下进行）</p>
+                    <p>系统更新和升级</p>
+                    <blockquote>$ sudo apt -y update && sudo apt -y upgrade <br>
+                                $ sudo apt dist-upgrade && sudo apt autoremove <br>
+                                $ sudo reboot </blockquote>
+                    <p>最后一个是系统重启指令，重启后再次进入terminal</p>
+
+                    <h2 class="section-heading"> 生成客户端认证密钥（JWT文件）</h2>
+
+                    <p> 在服务器上，以太坊执行层（Execution）和共识层（Consensus）客户端之间的通信，需要使用一种叫做 JWT（JSON Web Token）的安全认证方式。<br>
+                        <br>
+
+                        你可以把JWT简单理解为一个密码文件，这个文件里存放着一段随机生成的密码（32字节的随机字符），两个客户端都会使用这个文件来确认对方的身份，以保证通信的安全。<br>
+                        <br>
+
+                        现在，你需要在服务器上新建一个文件夹，用来存放这个JWT密码文件。</p>
+
+                    <p>先创建一个文档来存放这个JWT密钥</p>
+
+                    <blockquote>$ sudo mkdir -p /var/lib/jwtsecret</blockquote>
+
+                    <p>使用openssl来生成这个密钥</p>
+
+                    <blockquote>$ openssl rand -hex 32 | sudo tee /var/lib/jwtsecret/jwt.hex > /dev/null</blockquote>
+
+                    <p>用下列命令来查看生成的密钥</p>
+
+                    <blockquote>$ sudo nano /var/lib/jwtsecret/jwt.hex</blockquote>
+
+                    <p>这个文件里存放着一段随机生成的密码（32字节的随机字符）看起来就应该和下图类似：</p>
+
+                    <a href="#">
+                        <img class="img-responsive" src="../img/jwtphoto.webp" alt="">
+                    </a>
+
+                    <h2 class="section-heading"> 安装执行链客户端GETH</h2>
+                    <br>
+                    <p> 回主目录并且下载GETH</p>
+
+                    <blockquote> $ cd <br>$ curl -LO https://gethstore.blob.core.windows.net/builds/geth-linux-amd64-1.14.5-0dd173a7.tar.gz</blockquote>
+
+                    <p> 解压</p>
+
+                    <blockquote> $ tar xvf geth-linux-amd64-1.14.5-0dd173a7.tar.gz <br>
+                                 $ cd geth-linux-amd64-1.14.5-0dd173a7 <br>
+                                 $ sudo cp geth /usr/local/bin
+                    </blockquote>
+
+                    <p> 清理下载文件 </p>
+
+                    <blockquote> $ cd .. <br>
+                                 $ rm geth-linux-amd64-1.14.5-0dd173a7.tar.gz <br>
+                                 $ rm -r geth-linux-amd64-1.14.5-0dd173a7
+                    </blockquote>
+
+                    <p> 设置GETH后台运行 </p> 
+
+                    <p>（这里需要创建一个无法登陆系统的用户，并且让GETH在这个用户下跑）</p>
+
+                    <blockquote> $ sudo useradd --no-create-home --shell /bin/false geth </blockquote>
+
+                    <p> 创建一个目录来存放GETH的数据 </p>
+
+                    <blockquote> $ sudo mkdir -p /var/lib/geth </blockquote>
+
+                    <p> 设置GETH权限 </p>
+
+                    <blockquote> $ sudo chown -R geth:geth /var/lib/geth </blockquote>
+
+                    <p> 创建一个GETH的服务文件 并且用nano来修改文件 </p>
+
+                    <blockquote> $ sudo nano /etc/systemd/system/geth.service </blockquote>
+
+                    <p>一字不差的拷贝下列文件内容</p>
+
+                    <blockquote>[Unit]<br>
+                                Description=Geth Execution Client (Mainnet)<br>
+                                After=network.target<br>
+                                Wants=network.target<br>
+                                <br>
+                                [Service]<br>
+                                User=geth<br>
+                                Group=geth<br>
+                                Type=simple<br>
+                                Restart=always<br>
+                                RestartSec=5<br>
+                                TimeoutStopSec=600<br>
+                                ExecStart=/usr/local/bin/geth \<br>
+                                --mainnet \<br>
+                                --datadir /var/lib/geth \<br>
+                                --authrpc.jwtsecret /var/lib/jwtsecret/jwt.hex \<br>
+                                --db.engine pebble<br>
+                                <br>
+                                [Install]<br>
+                                WantedBy=default.target<br>
+                    </blockquote>
+
+                    <p>看上去应该是像这样</p>
+
+                    <a href="#">
+                        <img class="img-responsive" src="../img/GethServiceConfig.webp" alt="">
+                    </a>
+
+                    <p> 保存并且退出nano </p>
+                    <p> 先按CTRL+x，然后按y，然后按回车 </p>
+                    <p> 系统软启动一下，然后启动GETH </p>
+
+                    <blockquote> $ sudo systemctl daemon-reload <br>
+                                 $ sudo systemctl enable geth <br>
+                                 $ sudo systemctl start geth <br>
+                                 $ sudo systemctl status geth
+                    </blockquote>
+
+                    <P>如果一切正常，他就应该看起来是这样：</P>
+                    
+                    <a href="#">
+                        <img class="img-responsive" src="../img/GethStatus.webp" alt="">
+                    </a>
+
+                    <p>按q来退出这个geth状态界面</p>
+
+                    <p>查看GETH的日志</p>
+
+                    <blockquote> $ sudo journalctl -fu geth </blockquote>
+
+                    <p>这里如果查看GETH的运行状态，他会显示一些关于寻找peers的日志，而不会立刻开始更新，这是正常的，因为我们还没有设置信标链客户端</p>
+                    
+                    <h2 class="section-heading"> 系统信标链客户端PRYSM</h2>
+
+                    <p>Prysm信标链客户端由两部分组成，一是信标链客户端本身，二是信标链客户端的验证者客户端</p>
+
+                    <p>首先，我们需要下载信标链客户端和验证者客户端</p>
+
+                    <blockquote>
+                        $ cd ~ <br>
+                        $ curl -LO https://github.com/prysmaticlabs/prysm/releases/download/v5.1.0/beacon-chain-v5.1.0-linux-amd64 <br>
+                        $ curl -LO https://github.com/prysmaticlabs/prysm/releases/download/v5.1.0/validator-v5.1.0-linux-amd64
+
+                    </blockquote>
+
+
+                </div>
+            </div>
+        </div>
+    </article>
+
+    <hr>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <ul class="list-inline text-center">
+                        <li>
+                            <a href="https://x.com/holycrabeth">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa-brands fa-x-twitter fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                    </ul>
+                    <p class="copyright text-muted">Copyright &copy; Holycrab 2025 请勿转载 </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- jQuery -->
+    <script src="../vendor/jquery/jquery.min.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="../vendor/bootstrap/js/bootstrap.min.js"></script>
+
+    <!-- Contact Form JavaScript -->
+    <script src="../js/jqBootstrapValidation.js"></script>
+    <script src="../js/contact_me.js"></script>
+
+    <!-- Theme JavaScript -->
+    <script src="../js/clean-blog.min.js"></script>
+
+</body>
+
+</html>
