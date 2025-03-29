@@ -4,3 +4,22 @@ blockquote {
   white-space: pre; /* Keeps spaces in command line text, if needed */
   overflow-x: auto; /* Adds horizontal scroll if content is very long */
 }
+.post-title {
+  /* The theme might already have styling for this */
+  font-weight: 700;
+}
+
+.post-title small {
+  display: block; /* optional: puts the small text on a new line */
+  font-size: 0.6em; /* optional: adjust as you like */
+  color: #999;      /* optional: a lighter color */
+}
+
+.post-subtitle a.video-link {
+  color: #333; /* or any color you prefer */
+  text-decoration: none;
+}
+
+.post-subtitle a.video-link:hover {
+  text-decoration: underline;
+}

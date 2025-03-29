@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="this blog is about how to setup MEV client for an up and running eth node.这篇博客是holycrab在b站和youtube的关于mev设置的视频的文稿，这里详细的讲诉了如何安装并且配置mev-boost客户端来获取节点在爆块时mev的收益 " />
+    <meta name="author" content="Holycrab" />
+
+    <title>Holycrab's Blog</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+
+    <!-- Theme CSS -->
+    <link href="../css/clean-blog.min.css" rel="stylesheet" />
+    <!-- Custom Overrides -->
+    <link href="../css/blockquote_span.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link
+      href="../vendor/font-awesome/css/all.min.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800"
+      rel="stylesheet"
+      type="text/css"
+    />
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+      <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+          <button
+            type="button"
+            class="navbar-toggle"
+            data-toggle="collapse"
+            data-target="#bs-example-navbar-collapse-1"
+          >
+            <span class="sr-only">Toggle navigation</span>
+            Menu <i class="fa fa-bars"></i>
+          </button>
+          <a style="color: black" class="navbar-brand" href="../index.html"
+            >Holycrab's Blog</a
+          >
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav navbar-right">
+            <li>
+              <a style="color: black" href="../index.html">博客主页</a>
+            </li>
+            <li>
+              <a style="color: black" href="../joinus.html">加入社群</a>
+            </li>
+          </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+      </div>
+      <!-- /.container -->
+    </nav>
+
+    <!-- Page Header -->
+    <!-- Set your background image for this header on the line below. -->
+    <header
+      class="intro-header"
+      style="background-image: url('../img/eth\ top\ banner.webp')"
+    >
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <div class="post-heading"></div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Post Content -->
+    <article>
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+    
+            <h1 class="post-title">
+              B站以太坊本地节点配置MEV-Boost全过程
+              <small>视频文稿+详解</small>
+            </h1>
+    
+            <h2 class="post-subtitle">
+              <a href="https://www.bilibili.com/video/BV1Wd4y1B7u8/?share_source=copy_web&vd_source=c3248a6ca4258a16784e676d5ea1090f"
+                 target="_blank"
+                 class="video-link">
+                B站视频传送门：<br>
+                如何提升以太坊居家质押节点的收益？手把手教你mev-boost插件安装。
+              </a>
+            </h2>
+            <p>创建一个用户，让MEV-Boost客户端在这个用户下跑。这样的用户无法登陆系统</p>
+            <blockquote>$ sudo useradd --no-create-home --shell /bin/false mevboost</blockquote>
+            <p>下载最新版本的MEV-Boost （截稿时最新版本为MEV-boost V1.8，请点击以下链接自行查找）</p>
+
+            <p>最新版本
+                <a
+                href="https://github.com/flashbots/mev-boost/releases"
+                target="_blank"
+                style="font-size: 0.8em; color: grey"
+              >
+                https://github.com/flashbots/mev-boost/releases
+              </a>
+            </p>
+
+            <blockquote>$ cd ~<br>$ wget https://github.com/flashbots/mev-boost/releases/download/v1.8/mev-boost_1.8_linux_amd64.tar.gz<br></blockquote>
+
+            <p>解压，清理，安装</p>
+            <blockquote>$ tar xvf mev-boost_1.8_linux_amd64.tar.gz<br>$ sudo cp mev-boost /usr/local/bin<br>$ rm mev-boost LICENSE README.md mev-boost_1.8_linux_amd64.tar.gz<br>$ sudo chown mevboost:mevboost /usr/local/bin/mev-boost</blockquote>
+            
+            <p>创建一个配置文件</p>
+            <blockquote>$ sudo nano /etc/systemd/system/mevboost.service</blockquote>
+
+            <p>在文件中输入以下内容</p>
+            <blockquote>[Unit]<br>Description=mev-boost (Mainnet)<br>Wants=network-online.target<br>After=network-online.target<br><br>[Service]<br>Type=simple<br>User=mevboost<br>Group=mevboost<br>Restart=always<br>RestartSec=5<br>ExecStart=mev-boost \<br>    -mainnet \<br>    -min-bid 0.05 \<br>    -relay-check \<br>    -relays https://example.com<br><br>[Install]<br>WantedBy=multi-user.target</blockquote>
+            <p>保存并且推出NANO</p>
+            <p>按CTRL+X然后按Y，然后回车</p>
+
+            <p>这里有一些需要解释的，首先，mev-boost是可以选择性开启的，也就是说，如果你发现这个区块的小费少于某一个数值的话，这里上诉文件写的是0.05eth，你可以选择这个区块不用外包给中继来打包，这样可以增加以太坊的抗审查性</p>
+            <p>其次是中继的选择， 上诉文件中的-relays 需要你自己填写你想要使用的中继是谁。这里有一整个列表的中继，目前市场是比较被头部中继垄断的，你可以自行选择你想要的中继，他们在区块打包的小费多少方面大差不差。</p>
+            <p>中继列表 relay list
+                <a
+                href="https://github.com/eth-educators/ethstaker-guides/blob/main/MEV-relay-list.md"
+                target="_blank"
+                style="font-size: 0.8em; color: grey"
+              >
+                链接
+              </a>   进去后往右边滚动就会看到Relay URL，拷贝来上面的服务文件就行了。
+            </p>
+            <p>系统软重启</p>
+            <blockquote>$ sudo systemctl daemon-reload</blockquote>
+            <p>启动MEV-Boost</p>
+            <blockquote>$ sudo systemctl start mevboost</blockquote>
+            <p>查看MEV-Boost的状态</p>
+            <blockquote>$ sudo systemctl status mevboost</blockquote>
+            <p>如果你看到绿色的active (running) 说明MEV-Boost已经成功运行了</p>
+            <p>如果你看到红色的failed，说明MEV-Boost没有成功运行，你可以查看日志</p>
+            <blockquote>$ sudo journalctl -u mevboost</blockquote>
+
+            <p>最后配置信标链和validator客户端</p>
+            <p>分别在你的信标链和validator客户端配置文件中，添加以下内容</p>
+
+            <p>Prysm consensus: --http-mev-relay=http://127.0.0.1:18550<br>
+            Prysm validator: --enable-builder</p>
+            <p>如果不知道如何打开这两个配置文件，请参考最早的节点搭建视频或者文稿</p>
+            
+            
+            <p>
+              <a href="setupEthNodeGuide.html"
+                 target="_blank"
+                 style="font-size: 0.8em; color: grey" 
+                 >以太坊本地节点搭建过程视频详解</a>
+            </p>
+
+            <p>配置完后记得保存服务文件并且软重启一下，然后用restart重启信标链,validator和mev-boost客户端</p>
+            <blockquote>$ sudo systemctl daemon-reload</blockquote>
+            <blockquote>$ sudo systemctl restart prysmbeacon</blockquote>
+            <blockquote>$ sudo systemctl restart prysmvalidator</blockquote>
+            <blockquote>$ sudo systemctl restart mevboost</blockquote>
+            <span class="meta">
+              Posted by <a href="../joinus.html">Holycrab</a> on Jan 24, 2023
+            </span>
+    
+          </div>
+        </div>
+      </div>
+    </article>
+    <!-- Footer -->
+    <footer>
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <ul class="list-inline text-center">
+              <li>
+                <a href="https://x.com/holycrabeth">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i
+                      class="fa-brands fa-x-twitter fa-stack-1x fa-inverse"
+                    ></i>
+                  </span>
+                </a>
+              </li>
+            </ul>
+            <p class="copyright text-muted">
+              Copyright &copy; Holycrab 2025 请勿转载
+            </p>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <!-- jQuery -->
+    <script src="../vendor/jquery/jquery.min.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="../vendor/bootstrap/js/bootstrap.min.js"></script>
+
+    <!-- Contact Form JavaScript -->
+    <script src="../js/jqBootstrapValidation.js"></script>
+    <script src="../js/contact_me.js"></script>
+
+    <!-- Theme JavaScript -->
+    <script src="../js/clean-blog.min.js"></script>
+  </body>
+</html>
